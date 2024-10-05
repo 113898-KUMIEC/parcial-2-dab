@@ -1,0 +1,147 @@
+<div class="container">
+  <h2>Agregar Película</h2>
+<hr />
+<form (ngSubmit)="submitForm()" [formGroup]="movieForm">
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <label for="titleInmput" class="col-sm-2 col-form-label">Título</label>
+      <input
+        type="text"
+        class="form-control"
+        id="titleInmput"
+        placeholder="Título"
+        formControlName="title"
+        [ngClass]="{
+          'form-control': true,
+          'input-not-valid':
+            !movieForm.controls['title'].valid &&
+            movieForm.controls['title'].touched
+        }"
+      />
+      <small
+      class="invalid-feedback"
+      *ngIf="
+      !movieForm.controls['title'].valid &&
+      movieForm.controls['title'].touched &&
+      movieForm.controls['title'].getError('required')
+            "
+      >
+        El Titulo es requerido
+      </small>
+      <small
+      class="invalid-feedback"
+      *ngIf="
+      !movieForm.controls['title'].valid &&
+      movieForm.controls['title'].touched &&
+      movieForm.controls['title'].getError('minLength')
+            "
+      >
+        El Titulo tiene que ser minimo 5 caracteres
+      </small>
+      <small id="nameMinlengthErrorMessage" class="form-text text-muted error-message" *ngIf="
+                    !movieForm.controls['title'].valid &&
+                    movieForm.controls['title'].touched &&
+                    !movieForm.controls['title'].getError('movieExists')
+                  ">
+        El titulo no puede estar repetido
+      </small> 
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <label for="hrefInmput" class="col-sm-2 col-form-label">Link</label>
+      <input
+        type="text"
+        class="form-control"
+        id="hrefInmput"
+        formControlName="href"
+        [ngClass]="{
+          'is-invalid': movieForm.get('href')?.invalid && movieForm.get('href')?.touched
+        }"
+      />      
+      <small id="nameMinlengthErrorMessage" class="form-text text-muted error-message" *ngIf="
+      !movieForm.controls['href'].valid &&
+      movieForm.controls['href'].touched &&
+      movieForm.controls['href'].getError('pattern')
+    ">
+      el link no puede tener espacios y tiene que ser en mayuscula
+      </small>
+      <small id="nameMinlengthErrorMessage" class="form-text text-muted error-message" *ngIf="
+      !movieForm.controls['href'].valid &&
+      movieForm.controls['href'].touched &&
+      movieForm.controls['href'].getError('minLength')
+    ">
+      el link no puede tener menos de 5 letras 
+      </small>
+      <small id="nameMinlengthErrorMessage" class="form-text text-muted error-message" *ngIf="
+      !movieForm.controls['href'].valid &&
+      movieForm.controls['href'].touched &&
+      movieForm.controls['href'].getError('pattern')
+    ">
+      el link no puede tener espacios
+      </small>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2">
+      <label for="yearInput" class="col-sm-2 col-form-label">Año</label>
+      <input type="number" class="form-control" id="yearInput"
+      formControlName="year"
+      [ngClass]="{
+        'is-invalid': movieForm.get('year')?.invalid && movieForm.get('year')?.touched
+      }"/>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-10">
+      <label for="extractInput" class="col-sm-2 col-form-label">Extracto</label>
+      <textarea class="form-control" id="extractInput" rows="3"
+      formControlName="extract"
+      [ngClass]="{
+        'is-invalid': movieForm.get('extract')?.invalid && movieForm.get('extract')?.touched
+      }"
+      ></textarea>
+    </div>
+  </div>
+  <h4>Actores</h4>
+  <div class="form-group row">
+    <div formArrayName="cast">
+      <div [formGroupName]="i"
+      *ngFor="let cast of cast.controls; let i = index">
+        <div>
+          <h4>Nro: {{i}}</h4>
+          <div class="col-sm-5">
+            <label for="firstNameInput" class="col-sm-2 col-form-label">Nombre</label>
+            <input type="text" class="form-control" id="firstNameInput" 
+            formControlName="firstName"
+            [ngClass]="{
+              'is-invalid': movieForm.get('firstName')?.invalid && movieForm.get('firstName')?.touched
+            }"
+            />
+          </div>
+          <div class="col-sm-5">
+            <label for="lastNameInput" class="col-sm-2 col-form-label">Apellido</label>
+            <input type="text" class="form-control" id="lastNameInput" 
+            formControlName="lastName"
+            [ngClass]="{
+              'is-invalid': movieForm.get('lastName')?.invalid && movieForm.get('lastName')?.touched
+            }"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-info"
+      (click)="addCast('', '')"><i class="bi-plus"></i></button>
+    </div>
+    <div class="col-sm-2">
+      <button type="button" class="btn btn-info"
+      (click)="deleteCast()">Borrar</button>
+    </div>
+  </div>
+  <button class="btn btn-primary"  type="submit">Guardar</button>
+</form>
+
+</div>

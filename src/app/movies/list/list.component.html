@@ -1,0 +1,22 @@
+<h2>Lista de Películas</h2>
+<hr />
+<table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Título</th>
+        <th scope="col">Año</th>
+        <th scope="col">Género</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mov of listMovie">
+        <td>{{ mov.title }}</td>
+        <td>{{ mov.year }}</td>
+        <td>{{ mov.genres?.join(', ') }}</td>
+        <td>
+            <button type="button" class="btn btn-info"><i class="bi bi-pencil-fill"></i></button>
+        </td>
+      </tr>
+    </tbody>
+</table>
